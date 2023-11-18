@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
     private float speed = 20;
     [SerializeField] private GameObject ObstaclePrefab;
     [SerializeField] private GameObject[] Obstacle;
+    [SerializeField] private Text ScoreText;
+    [SerializeField] private int Score;
 
     private void Start()
     {
@@ -17,6 +20,12 @@ public class Player : MonoBehaviour
     private void Update()
     {
         Move();
+        ScoreText.text = Score.ToString();
+        if(GameObject.Find("Obstacle(Clone)") == null)
+        {
+            SpawnObstacle();
+            Obstacle = GameObject.FindGameObjectsWithTag("Obstacle");
+        }
     }
 
     private void SpawnObstacle()
@@ -46,6 +55,7 @@ public class Player : MonoBehaviour
             {
                 if(obstacle == Obstacle[i])
                 {
+                    Score++;
                     Destroy(obstacle);
                     break;
                 }
